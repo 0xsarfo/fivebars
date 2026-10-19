@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fivebars</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<script>document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";</script>
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="style.css">
+<script src="vendor/leaflet.js"></script>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="logo" title="Fivebars"><i></i><i></i><i></i><i></i><i></i></span><button id="brandName" class="brand-name">NETWORK</button><small id="brandSub"></small></div>
+  <div class="grow"></div>
+  <div class="pills">
+    <span id="pillStatus"><i class="dot"></i>connecting</span>
+    <span id="pillOp">–</span>
+    <span id="pillNet">–</span>
+    <span id="pillUp">–</span>
+  </div>
+  <button class="iconbtn" id="bellBtn" title="Alerts"><span data-icon="bell"></span></button>
+  <button class="iconbtn" id="themeBtn" title="Toggle light / dark"><span data-icon="moon"></span></button>
+</header>
+
+<main>
+  <section class="tiles" id="tiles"></section>
+
+  <div class="layout">
+    <div class="col">
+      <section class="card">
+        <div class="card-h">
+          <h2>Throughput</h2>
+          <div class="seg" id="rangeSeg" style="margin-left:auto"></div>
+        </div>
+        <div class="chart" id="thrChart"></div>
+        <div class="legend"><span><i style="background:var(--series-1)"></i>Download</span><span><i style="background:var(--series-2)"></i>Upload</span></div>
+      </section>
+
+      <section class="card">
+        <div class="card-h"><h2>Latency</h2><span class="note">ping to 1.1.1.1 · red bands = outages</span></div>
+        <div class="chart sm" id="latChart"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-h"><h2 id="sigTitle">Signal strength</h2><span class="note" id="sigNote">RSRP from your mobile mast · tinted by quality</span></div>
+        <div class="chart sm" id="sigChart"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-h"><h2>Coverage</h2><span class="note">masts near you · OpenCellID</span><button class="link" id="mapLink" style="margin-left:16px">Coverage map ›</button></div>
+        <div class="cov">
+          <div class="minimap" id="miniMap"></div>
+          <div class="mini-sum" id="mapSummary">Loading towers…</div>
+        </div>
+      </section>
+    </div>
+
+    <div class="col">
+      <section class="card hero">
+        <div class="card-h">
+          <h2 id="heroTitle">Signal</h2>
+          <button class="link" id="placementLink" style="margin-left:auto">Placement mode ›</button>
+        </div>
+        <div class="gauge-wrap" id="heroGauge"></div>
+        <div class="chips">
+          <span><i class="dot critical"></i>Poor</span><span><i class="dot warning"></i>Fair</span>
+          <span><i class="dot good"></i>Good</span><span><i class="dot good"></i>Excellent</span>
+        </div>
+        <div class="duo" id="heroDuo"></div>
+        <div class="infobox"><span data-icon="info"></span><div id="heroTip">Waiting for the router…</div></div>
+      </section>
+
+      <section class="card">
+        <div class="card-h"><h2>Events &amp; outages</h2><span class="note" id="evCount"></span></div>
+        <div class="events" id="events"><div class="empty">No events yet</div></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<nav class="dock" id="dock"></nav>
+<div id="hoverTip"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>

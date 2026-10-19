@@ -1,0 +1,25 @@
+# Personal data must never be committed: history, settings (router password, API keys), location, tower downloads.
+# (Fivebars stores these in your user data folder, but guard against FIVEBARS_DATA pointing inside the repo.)
+data/
+*.db
+*.db-shm
+*.db-wal
+config.json
+location.json
+towers/
+*.key
+*.csv.gz
+
+# Python / build output
+__pycache__/
+*.pyc
+.venv/
+venv/
+build/
+dist/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
