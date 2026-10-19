@@ -47,7 +47,7 @@ The builds aren't code-signed yet, so the first launch shows a warning:
 You need Python 3.9 or newer, and nothing else: no extra packages.
 
 ```bash
-git clone https://github.com/<you>/fivebars.git
+git clone https://github.com/0xsarfo/fivebars.git
 cd fivebars
 python3 fivebars.py        # macOS
 py fivebars.py             # Windows
