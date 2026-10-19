@@ -1075,10 +1075,14 @@ function drawCoverage(ref, d, { mini = false } = {}) {
   // so typical urban cell sizes are used). Overlaps build up into a readable coverage picture at country zoom.
   const order = { "2G": 0, "3G": 1, "4G": 2, "5G": 3 };
   const visible = d.sites.filter((s) => !hide.has(s.provider) && !hide.has(s.radio));
-  if (!mini && !hide.has("coverage"))
+  // Only meaningful zoomed out: at street level each circle is bigger than the screen and hundreds of them
+  // stack into a solid wash in dense cities. Fade them out between zoom 10 and 13.
+  const zc = map.getZoom ? map.getZoom() : 14;
+  const covAlpha = zc <= 10 ? 0.07 : zc >= 13 ? 0 : 0.07 * (13 - zc) / 3;
+  if (!mini && !hide.has("coverage") && covAlpha > 0)
     for (const s of visible) {
       if (s.radio === "2G") continue;
-      L.circle([s.lat, s.lon], { radius: s.radio === "4G" ? 1500 : 2500, stroke: false, fillColor: pColor(s.provider), fillOpacity: 0.07, interactive: false }).addTo(layers);
+      L.circle([s.lat, s.lon], { radius: s.radio === "4G" ? 1500 : 2500, stroke: false, fillColor: pColor(s.provider), fillOpacity: covAlpha, interactive: false }).addTo(layers);
     }
 
   // towers: 4G filled, 3G hollow ring, 2G small dot; 2px surface ring separates overlaps. Shrink when zoomed out.
